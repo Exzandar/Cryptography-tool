@@ -9,12 +9,11 @@ from colorama import init
 from termcolor import cprint
 from pyfiglet import figlet_format
 
-
-init(strip=not sys.stdout.isatty()) # strip colors if stdout is redirected
+init(strip=not sys.stdout.isatty())  # strip colors if stdout is redirected             # the big banner R O C K Y
 cprint(figlet_format('R O C K Y', font='larry3d'), color='yellow', attrs=['bold'])
 
 
-def banner(text, ch='-', length=39):
+def banner(text, ch='-', length=39):                                                    # the small banner --- ---
     spaced_text = ' %s ' % text
     banner = spaced_text.center(length, ch)
     print(banner)
@@ -109,7 +108,6 @@ def AES_enc_files(file_name, key, iv):
     print("mission completed successfully\n")
 
 
-
 def AES_dec_files(file_name, key, iv):
     with open(file_name, 'rb') as f1:
         new = AES.new(key, AES.MODE_CBC, iv)
@@ -147,7 +145,6 @@ def ARC4_dec_message(message, key):
     print("\n #<|#<|# your Decrypted message: ", encoding, "\n")
 
 
-
 def ARC4_enc_files(file_name, key):
     file_size = str(os.path.getsize(file_name)).zfill(16).encode('ascii')
     new_file = input("write the complete path where you want to save the file with the extension: ")
@@ -167,7 +164,6 @@ def ARC4_enc_files(file_name, key):
             f2.close()
         f1.close()
     print("mission completed successfully\n")
-
 
 
 def ARC4_dec_files(file_name, key):
@@ -212,7 +208,7 @@ def DES3_enc_files(file_name, key, iv):
     read_size = 1024
     new = DES3.new(key, DES3.MODE_CBC, iv)
     with open(file_name, 'rb') as f1:
-        with open(new_file,'wb') as f2:
+        with open(new_file, 'wb') as f2:
             while True:
                 data = f1.read(read_size)
                 if len(data) == 0:
@@ -225,7 +221,6 @@ def DES3_enc_files(file_name, key, iv):
             f2.close()
         f1.close()
     print("mission completed successfully\n")
-
 
 
 def DES3_dec_files(file_name, key, iv):
@@ -256,55 +251,96 @@ while True:
     if x == 'exit' or x == '0':
         print("\n[ Thanks for your time ^_^ BYE, ]")
         break
+
+    # ==============================================================================================================
+    # Encryption and Decryption of messages
+
     elif x == 'message' or x == '2':
         print("\n1-  AES\n2-  ARC4\n3-  DES3\n4-  CEASER")
         y = int(input("\nwrite the number of the cipher : "))
+
+    # AES-Cipher
+    # ------------------------------------------
+
         if y == 1:
             a = input("write 'E' for AES-Encryption or 'D' for AES-Decryption: ")
             if a == 'E':
                 m = codecs.encode(input("write the message: "), 'utf-8')
-                k = codecs.encode(input("write your key: "), 'utf-8')
-                v = codecs.encode(input("write your iv: "), 'utf-8')
-                if len(k) < 16 or len(v) < 16:
-                    print("wrong >> key & iv must be == 16 or 32 or 64 or 128")
-                    continue
-                AES_enc_messege(m, k, v)
+                while True:
+                    k = codecs.encode(input("write your key: "), 'utf-8')
+                    v = codecs.encode(input("write your iv: "), 'utf-8')
+                    try:
+                        AES_enc_messege(m, k, v)
+                        break
+                    except ValueError:
+                        print(" [XXX]/\/\ Wrong in key or iv size, they must be 16 size or 32 or 64 or 128")
             elif a == 'D':
                 m = codecs.encode(input("write the Decrypted message: "), 'utf-8')
-                k = codecs.encode(input("write your key: "), 'utf-8')
-                v = codecs.encode(input("write your iv: "), 'utf-8')
-                if len(k) < 16 or len(v) < 16:
-                    print("wrong >> key & iv must be == 16 or 32 or 64 or 128")
-                    continue
-                AES_dec_message(m, k, v)
+                while True:
+                    k = codecs.encode(input("write your key: "), 'utf-8')
+                    v = codecs.encode(input("write your iv: "), 'utf-8')
+                    try:
+                        AES_dec_message(m, k, v)
+                        break
+                    except ValueError:
+                        print(" [XXX]/\/\ Wrong in key or iv size, they must be 16 size or 32 or 64 or 128")
+    # --------------------------------------------------------------------------------------------------
+
+    # ARC4-Cipher
+    # ------------------------------------------
+
         elif y == 2:
             a = input("write 'E' for ARC4-Encryption or 'D' for ARC4-Decryption: ")
             if a == 'E':
                 m = codecs.encode(input("write the message: "), 'utf-8')
-                k = codecs.encode(input("write your key: "), 'utf-8')
-                ARC4_enc_message(m, k)
+                while True:
+                    k = codecs.encode(input("write your key: "), 'utf-8')
+                    try:
+                        ARC4_enc_message(m, k)
+                        break
+                    except ValueError:
+                        print(" [XXX]/\/\ Wrong in key >> ARC4 key size must be greater than 8 byte ")
             elif a == 'D':
                 m = codecs.encode(input("write the Decrypted message: "), 'utf-8')
-                k = codecs.encode(input("write your key: "), 'utf-8')
-                ARC4_dec_message(m, k)
+                while True:
+                    k = codecs.encode(input("write your key: "), 'utf-8')
+                    try:
+                        ARC4_dec_message(m, k)
+                        break
+                    except ValueError:
+                        print(" [XXX]/\/\ Wrong in key >> ARC4 key size must be greater than 8 byte ")
+    # -------------------------------------------------------------------------------------------------
+
+    # DES3-Cipher
+    # --------------------------------------------
+
         elif y == 3:
             a = input("write 'E' for DES3-Encryption or 'D' for DES3-Decryption: ")
             if a == 'E':
                 m = codecs.encode(input("write the message: "), 'utf-8')
-                k = codecs.encode(input("write your key: "), 'utf-8')
-                v = codecs.encode(input("write your iv: "), 'utf-8')
-                if len(k) < 16 or len(v) < 8:
-                    print("wrong >> key must be == 16 or 24   and iv must be == 8")
-                    continue
-                DES3_enc_message(m, k, v)
+                while True:
+                    k = codecs.encode(input("write your key: "), 'utf-8')
+                    v = codecs.encode(input("write your iv: "), 'utf-8')
+                    try:
+                        DES3_enc_message(m, k, v)
+                        break
+                    except ValueError:
+                        print(" [XXX]/\/\ Wrong in key or iv >> DES3 key must be 16 or 24 bytes & iv must be 8 bytes")
             elif a == 'D':
                 m = codecs.encode(input("write the Decrypted message: "), 'utf-8')
-                k = codecs.encode(input("write your key: "), 'utf-8')
-                v = codecs.encode(input("write your iv: "), 'utf-8')
-                if len(k) < 16 or len(v) < 8:
-                    print("wrong >> key must be == 16 or 24   and iv must be == 8")
-                    continue
-                DES3_dec_message(m, k, v)
+                while True:
+                    k = codecs.encode(input("write your key: "), 'utf-8')
+                    v = codecs.encode(input("write your iv: "), 'utf-8')
+                    try:
+                        DES3_dec_message(m, k, v)
+                        break
+                    except ValueError:
+                        print(" [XXX]/\/\ Wrong in key or iv >> DES3 key must be 16 or 24 bytes & iv must be 8 bytes")
+    # ---------------------------------------------------------------------------------------------------
+
+    # CEASER-cipher
+    # ----------------------------------------------
+
         elif y == 4:
             a = input("write 'E' for CEASER-Encryption or 'D' for CEASER-Decryption: ")
             if a == 'E':
@@ -319,60 +355,114 @@ while True:
             print("wrong choose, please choose again")
             continue
 
+    # =====================================================================================================================
+    # Encryption and Decryption of files
+
     elif x == 'file' or x == '1':
         print("1-  AES\n2-  ARC4\n3-  DES3")
         y = int(input("write the number of the cipher : "))
+
+    # AES-Cipher
+    # ------------------------------------------
+
         if y == 1:
             a = input("write 'E' for AES-Encryption or 'D' for AES-Decryption: ")
             if a == 'E':
-                m = input("write the path of the file: ")
-                k = codecs.encode(input("write your key: "), 'utf-8')
-                v = codecs.encode(input("write your iv: "), 'utf-8')
-                if len(k) < 16 or len(v) < 16:
-                    print("wrong >> key & iv must be == 16 or 32 or 64 or 128")
-                    continue
-                AES_enc_files(m, k, v)
+                while True:
+                    try:
+                        m = input("write the path of the file: ")
+                        k = codecs.encode(input("write your key: "), 'utf-8')
+                        v = codecs.encode(input("write your iv: "), 'utf-8')
+                        AES_enc_files(m, k, v)
+                        break
+                    except ValueError:
+                        print(" [XXX]/\/\ Wrong in key or iv size, they must be 16 size or 32 or 64 or 128")
+                    except FileNotFoundError:
+                        print("  [ ... sorry, file not found ... ] ")
             elif a == 'D':
-                m = input("write the path of the file: ")
-                k = codecs.encode(input("write your key: "), 'utf-8')
-                v = codecs.encode(input("write your iv: "), 'utf-8')
-                if len(k) < 16 or len(v) < 16:
-                    print("wrong >> key & iv must be == 16 or 32 or 64 or 128")
-                    continue
-                AES_dec_files(m, k, v)
+                while True:
+                    try:
+                        m = input("write the path of the file: ")
+                        k = codecs.encode(input("write your key: "), 'utf-8')
+                        v = codecs.encode(input("write your iv: "), 'utf-8')
+                        AES_dec_files(m, k, v)
+                        break
+                    except ValueError:
+                        print(" [XXX]/\/\ Wrong in key or iv size, they must be 16 size or 32 or 64 or 128")
+                    except FileNotFoundError:
+                        print("  [ ... sorry, file not found ... ] ")
+    # -----------------------------------------------------------------------------------
+
+    # ARC4-Cipher
+    # ------------------------------------------
+
         elif y == 2:
             a = input("write 'E' for ARC4-Encryption or 'D' for ARC4-Decryption: ")
             if a == 'E':
-                m = input("write the path of the file: ")
-                k = codecs.encode(input("write your key: "), 'utf-8')
-                ARC4_enc_files(m, k)
+                while True:
+                    try:
+                        m = input("write the path of the file: ")
+                        k = codecs.encode(input("write your key: "), 'utf-8')
+                        ARC4_enc_files(m, k)
+                        break
+                    except ValueError:
+                        print(" [XXX]/\/\ Wrong in key >> ARC4 key size must be greater than 8 byte ")
+                    except FileNotFoundError:
+                        print("  [ ... sorry, file not found ... ] ")
             elif a == 'D':
-                m = input("write the path of the file: ")
-                k = codecs.encode(input("write your key: "), 'utf-8')
-                ARC4_dec_files(m, k)
+                while True:
+                    try:
+                        m = input("write the path of the file: ")
+                        k = codecs.encode(input("write your key: "), 'utf-8')
+                        ARC4_dec_files(m, k)
+                    except ValueError:
+                        print(" [XXX]/\/\ Wrong in key >> ARC4 key size must be greater than 8 byte ")
+                    except FileNotFoundError:
+                        print("  [ ... sorry, file not found ... ] ")
+    # ------------------------------------------------------------------------------
+
+    # DES3-Cipher
+    # --------------------------------------------
+
         elif y == 3:
             a = input("write 'E' for DES3-Encryption or 'D' for DES3-Decryption: ")
             if a == 'E':
-                m = input("write the path of the file: ")
-                k = codecs.encode(input("write your key: "), 'utf-8')
-                v = codecs.encode(input("write your iv: "), 'utf-8')
-                if len(k) < 16 or len(v) < 8:
-                    print("wrong >> key must be == 16 or 24   and iv must be == 8")
-                    continue
-                DES3_enc_files(m, k, v)
+                while True:
+                    try:
+                        m = input("write the path of the file: ")
+                        k = codecs.encode(input("write your key: "), 'utf-8')
+                        v = codecs.encode(input("write your iv: "), 'utf-8')
+                        DES3_enc_files(m, k, v)
+                    except ValueError:
+                        print(" [XXX]/\/\ Wrong in key or iv >> DES3 key must be 16 or 24 bytes & iv must be 8 bytes")
+                    except FileNotFoundError:
+                        print("  [ ... sorry, file not found ... ] ")
             elif a == 'D':
-                m = input("write the path of the file: ")
-                k = codecs.encode(input("write your key: "), 'utf-8')
-                v = codecs.encode(input("write your iv: "), 'utf-8')
-                if len(k) < 16 or len(v) < 8:
-                    print("wrong >> key must be == 16 or 24   and iv must be == 8")
-                    continue
-                DES3_dec_files(m, k, v)
+                while True:
+                    try:
+                        m = input("write the path of the file: ")
+                        k = codecs.encode(input("write your key: "), 'utf-8')
+                        v = codecs.encode(input("write your iv: "), 'utf-8')
+                        DES3_dec_files(m, k, v)
+                    except ValueError:
+                        print(" [XXX]/\/\ Wrong in key or iv >> DES3 key must be 16 or 24 bytes & iv must be 8 bytes")
+                    except FileNotFoundError:
+                        print("  [ ... sorry, file not found ... ] ")
         else:
             print("wrong choose, please choose again")
             continue
+    # --------------------------------------------------------------------------------
+
+    # generating random key and iv
+    # -----------------------------------------------------
+
     elif x == 'generate' or x == '3':
         random()
+    # --------------------------------------------------------------------------------
+
+    # HELP section
+    # -------------------------------------------------------
+
     elif x == 'help' or x == 'H':
         banner(text)
         print("# ROCKY tool for Encryption/Decryption messages or files\nCreated by: EXZANDAR")
@@ -395,8 +485,4 @@ while True:
     else:
         print("wrong choose, please choose again")
         continue
-
-
-
-
-
+    # -----------------------------------------------------------------------------
