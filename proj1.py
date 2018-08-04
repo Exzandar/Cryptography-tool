@@ -273,7 +273,8 @@ while True:
                         AES_enc_messege(m, k, v)
                         break
                     except ValueError:
-                        print(" [XXX]/\/\ Wrong in key or iv size, they must be 16 size or 32 or 64 or 128")
+                        print(" [XXX]/\/\ Wrong in key or iv size, they must be 16[AES-128] size or 24[AES-192] or "
+                              "32[AES-256]")
             elif a == 'D':
                 m = codecs.encode(input("write the Decrypted message: "), 'utf-8')
                 while True:
@@ -283,7 +284,8 @@ while True:
                         AES_dec_message(m, k, v)
                         break
                     except ValueError:
-                        print(" [XXX]/\/\ Wrong in key or iv size, they must be 16 size or 32 or 64 or 128")
+                        print(" [XXX]/\/\ Wrong in key or iv size, they must be 16[AES-128] size or 24[AES-192] or "
+                              "32[AES-256]")
     # --------------------------------------------------------------------------------------------------
 
     # ARC4-Cipher
@@ -376,7 +378,8 @@ while True:
                         AES_enc_files(m, k, v)
                         break
                     except ValueError:
-                        print(" [XXX]/\/\ Wrong in key or iv size, they must be 16 size or 32 or 64 or 128")
+                        print(" [XXX]/\/\ Wrong in key or iv size, they must be 16[AES-128] size or 24[AES-192] or "
+                              "32[AES-256]")
                     except FileNotFoundError:
                         print("  [ ... sorry, file not found ... ] ")
             elif a == 'D':
@@ -388,7 +391,8 @@ while True:
                         AES_dec_files(m, k, v)
                         break
                     except ValueError:
-                        print(" [XXX]/\/\ Wrong in key or iv size, they must be 16 size or 32 or 64 or 128")
+                        print(" [XXX]/\/\ Wrong in key or iv size, they must be 16[AES-128] size or 24[AES-192] or "
+                              "32[AES-256]")
                     except FileNotFoundError:
                         print("  [ ... sorry, file not found ... ] ")
     # -----------------------------------------------------------------------------------
@@ -466,7 +470,8 @@ while True:
     elif x == 'help' or x == 'H':
         banner(text)
         print("# ROCKY tool for Encryption/Decryption messages or files\nCreated by: EXZANDAR")
-        print("# NOTES: \n\n* this tool use BASE64 encoding and decoding \n** the 'KEY' & 'IV' should be % 16 == 0 "
+        print("# NOTES: \n\n* this tool use BASE64 encoding and decoding \n** the 'KEY' & 'IV' for AES-Cipher should be "
+              "16 for [AES-128] or 24 for [AES-192] or 32 for [AES-256]"
               "\n*** when you use DES3 Cipher the 'IV' size is '8' "
               "\n**** when you encrypt/decrypt file, write the file with its extension\n"
               "*** you can generate random key &"
